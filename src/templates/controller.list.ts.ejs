@@ -1,0 +1,23 @@
+import {<%= props.firstLetterCapital %>} from '../../../../entities/<%= props.firstLetterCapital %>';
+import {Request, Response} from 'express';
+import {<%= props.actionFirstCapital %><%= props.firstLetterCapital %>UseCase} from './<%= props.actionFirstCapital %><%= props.firstLetterCapital %>UseCase';
+
+
+class <%= props.actionFirstCapital %><%= props.firstLetterCapital %>Controller {
+	constructor(private <%= props.actionLower %><%= props.firstLetterCapital %>UseCase: <%= props.actionFirstCapital %><%= props.firstLetterCapital %>UseCase) {}
+
+	async handle(request: Request, response: Response): Promise<Response|undefined> {
+		try {
+			this.<%= props.actionLower %><%= props.firstLetterCapital %>UseCase.execute(request).then((result)=>{
+				const subscription<%= props.actionFirstCapital %>: <%= props.firstLetterCapital %>[] = Object.values(result);
+				return response.send(subscription<%= props.actionFirstCapital %>);
+			});
+		} catch (error) {
+			return response.status(400).json({
+				message: error.message || 'Unexpected error',
+			});
+		}
+	}
+}
+
+export {<%= props.actionFirstCapital %><%= props.firstLetterCapital %>Controller};

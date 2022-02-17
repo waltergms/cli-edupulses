@@ -1,0 +1,25 @@
+import {<%= props.actionFirstCapital %><%= props.firstLetterCapital %>UseCase} from './<%= props.actionLower %><%= props.firstLetterCapital %>UseCase';
+import {Request, Response} from 'express';
+
+class <%= props.actionFirstCapital %><%= props.firstLetterCapital %>Controller {
+	constructor(private <%= props.actionLower %><%= props.firstLetterCapital %>UseCase: <%= props.actionFirstCapital %><%= props.firstLetterCapital %>UseCase) {}
+
+	async handle(request: Request, response: Response): Promise<Response> {
+		try {
+			const userId:string = request.params.idUser;
+			const id<%= props.firstLetterCapital %>: string = request.body.id;
+			if (id<%= props.firstLetterCapital %>) {
+				const result<%= props.actionFirstCapital %>:boolean = await this.<%= props.actionLower %><%= props.firstLetterCapital %>UseCase.execute(userId, id<%= props.firstLetterCapital %>);
+				return response.status(200).send(result<%= props.actionFirstCapital %>);
+			} else {
+				return response.status(500).send('Can\'t <%= props.actionLower %> a <%= props.firstLetterCapital %> without <%= props.firstLetterCapital %>id.');
+			}
+		} catch (error) {
+			return response.status(400).json({
+				message: error.message || 'Unexpected error',
+			});
+		}
+	}
+}
+
+export {<%= props.actionFirstCapital %><%= props.firstLetterCapital %>Controller};

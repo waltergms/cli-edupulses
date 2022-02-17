@@ -1,0 +1,48 @@
+import express from 'express';
+import * as bodyParser from 'body-parser';
+
+import * as validateSchema from '../../../middleware/validateSchema';
+import {<%= props.firstLetterCapital %>ValidationSchema} from '../../../modules/<%= props.allLower %>/repositories/<%= props.firstLetterCapital %>ValidationSchema';
+
+import {list<%= props.firstLetterCapital %>Controller} from '../../../modules/<%= props.allLower %>/useCases/list<%= props.firstLetterCapital %>';
+import {create<%= props.firstLetterCapital %>Controller} from '../../../modules/<%= props.allLower %>/useCases/create<%= props.firstLetterCapital %>';
+import {update<%= props.firstLetterCapital %>Controller} from '../../../modules/<%= props.allLower %>/useCases/update<%= props.firstLetterCapital %>';
+import {delete<%= props.firstLetterCapital %>Controller} from '../../../modules/<%= props.allLower %>/useCases/delete<%= props.firstLetterCapital %>';
+
+
+const <%= props.firstLetterCapital %>Routes = express();
+<%= props.firstLetterCapital %>Routes.use(bodyParser.json());
+
+<%= props.firstLetterCapital %>Routes.get(
+	'/',
+	validateSchema.validateSchema(<%= props.firstLetterCapital %>ValidationSchema.get),
+	async (request, response) => {
+		list<%= props.firstLetterCapital %>Controller.handle(request, response);
+	}
+);
+
+<%= props.firstLetterCapital %>Routes.post(
+	'/',
+	validateSchema.validateSchema(<%= props.firstLetterCapital %>ValidationSchema.create),
+	async (request, response) => {
+		create<%= props.firstLetterCapital %>Controller.handle(request, response);
+	}
+);
+
+<%= props.firstLetterCapital %>Routes.put(
+	'/:id<%= props.firstLetterCapital %>',
+	validateSchema.validateSchema(<%= props.firstLetterCapital %>ValidationSchema.update),
+	async (request, response) => {
+		update<%= props.firstLetterCapital %>Controller.handle(request, response);
+	}
+);
+
+<%= props.firstLetterCapital %>Routes.delete(
+	'/:id<%= props.firstLetterCapital %>',
+	validateSchema.validateSchema(<%= props.firstLetterCapital %>ValidationSchema.delete),
+	async (request, response) => {
+		delete<%= props.firstLetterCapital %>Controller.handle(request, response);
+	}
+);
+
+export {<%= props.firstLetterCapital %>Routes};
